@@ -19,8 +19,6 @@
     }
   };
 
-  $: showClass = isShow ? 'visible opacity-100' : 'invisible opacity-0';
-
   $: triangleStyle = (position: string) => {
     switch (position) {
       case 'top':
@@ -51,13 +49,6 @@
 <div class="mb-20">
   <button
     type="button"
-    on:click={toggleShow}
-    class="mb-4 rounded-md bg-gray-700 p-1 text-white"
-  >
-    表示切り替え
-  </button>
-  <button
-    type="button"
     on:click={togglePossition}
     class="mb-4 rounded-md bg-gray-700 p-1 text-white"
   >
@@ -65,13 +56,13 @@
   </button>
 </div>
 
-<a href="/" class={`${potisionFromParentStyle} relative inline-block`}>
+<a href="/" class={`${potisionFromParentStyle} group relative inline-block`}>
   リンク（ツールチップ上）
   <span class="" role="tooltip">
     <span
-      class={`${showClass} ${triangleStyle(
+      class={`${triangleStyle(
         position
-      )} z-1 absolute block w-max max-w-[160px] rounded-md bg-[#000] py-2 px-3 text-left text-sm text-[#fff]  before:absolute before:m-auto before:block before:h-0 before:w-0 before:border-solid before:content-['']`}
+      )} z-1 invisible absolute block w-max max-w-[160px] rounded-md bg-[#000] py-2 px-3 text-left text-sm text-[#fff] opacity-0 before:absolute before:m-auto before:block before:h-0 before:w-0 before:border-solid before:content-[''] group-hover:visible group-hover:opacity-100`}
     >
       テキストが入ります。テキストが入ります。
     </span>
