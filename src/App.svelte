@@ -3,7 +3,7 @@
 </script>
 
 <main>
-  <div class="m-8">
+  <div class="m-16">
     <Tooltip />
   </div>
 </main>
