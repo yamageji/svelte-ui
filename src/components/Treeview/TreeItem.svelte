@@ -1,25 +1,45 @@
 <script lang="ts">
+  import { Keys } from "../../lib/keyboard";
   let isExpanded: boolean = false;
   let isSelected: boolean = false;
+  let tabIndex: 0 | -1 = 0;
 
-  const toggle = () => {
+  const expanded = () => (isExpanded = true);
+  const unExpanded = () => (isExpanded = false);
+  const handleClick = () => {
+    isSelected = true;
     isExpanded = !isExpanded;
   };
+
   const handleKeydown = (event: KeyboardEvent) => {
-    console.log(event.key);
-    if (event.key === 'Enter') toggle();
+    switch (event.key) {
+      case Keys.Enter:
+      case Keys.Space:
+        if (isSelected === false) {
+          isSelected = true;
+        }
+        return;
+      case Keys.ArrowRight:
+        if (isExpanded === false) {
+          isExpanded = true;
+        }
+        return;
+      case Keys.ArrowLeft:
+        if (isExpanded === true) {
+          isExpanded = false;
+        }
+        return;
+    }
   };
 </script>
 
-<!-- 子要素を持つ場合のみaria-expandedを付与する？ -->
 {#if $$slots.default}
   <li
     role="treeitem"
     aria-selected={isSelected}
-    on:click={toggle}
+    on:click={handleClick}
     on:keydown={handleKeydown}
-    class=""
-    tabindex="0"
+    tabindex={tabIndex}
   >
     <slot />
   </li>
@@ -30,7 +50,8 @@
     role="treeitem"
     aria-expanded={isExpanded}
     aria-selected={isSelected}
-    class="hidden  aria-expanded:block"
+    class="hidden aria-expanded:block"
+    tabindex={tabIndex}
   >
     <slot name="list" />
   </li>

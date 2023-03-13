@@ -1,10 +1,12 @@
 <script lang="ts">
-  import Tree from './Tree.svelte';
-  import TreeItem from './TreeItem.svelte';
-  import Group from './Group.svelte';
+  import Tree from "./Tree.svelte";
+  import TreeTitle from "./TreeTitle.svelte";
+  import TreeItem from "./TreeItem.svelte";
+  import Group from "./Group.svelte";
 </script>
 
 <Tree>
+  <TreeTitle class="text-2xl font-bold">My Documents</TreeTitle>
   <TreeItem>
     <span> Projects </span>
     <Group slot="list">
