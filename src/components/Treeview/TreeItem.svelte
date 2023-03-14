@@ -1,8 +1,12 @@
 <script lang="ts">
-  import { Keys } from '../../lib/keyboard';
+  import { createEventDispatcher } from "svelte";
+  import { Keys } from "../../lib/keyboard";
+
   let isExpanded: boolean = false;
   let isSelected: boolean = false;
   let tabIndex: 0 | -1 = 0;
+
+  const dispatch = createEventDispatcher();
 
   const expanded = () => (isExpanded = true);
   const unExpanded = () => (isExpanded = false);
@@ -10,25 +14,21 @@
     isSelected = true;
     isExpanded = !isExpanded;
   };
-
   const handleKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case Keys.Enter:
       case Keys.Space:
-        if (isSelected === false) {
-          isSelected = true;
-        }
-        return;
+        if (isSelected === true) return;
+        isSelected = true;
+        break;
       case Keys.ArrowRight:
-        if (isExpanded === false) {
-          isExpanded = true;
-        }
-        return;
+        if (isExpanded === true) return;
+        isExpanded = true;
+        break;
       case Keys.ArrowLeft:
-        if (isExpanded === true) {
-          isExpanded = false;
-        }
-        return;
+        if (isExpanded === false) return;
+        isExpanded = false;
+        break;
     }
   };
 </script>
@@ -40,6 +40,7 @@
     on:click={handleClick}
     on:keydown={handleKeydown}
     tabindex={tabIndex}
+    class={isSelected ? "text-red-500" : ""}
   >
     <slot open={isExpanded} />
   </li>
