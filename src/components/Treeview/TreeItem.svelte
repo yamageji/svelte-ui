@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Keys } from "../../lib/keyboard";
+  import { Keys } from '../../lib/keyboard';
   let isExpanded: boolean = false;
   let isSelected: boolean = false;
   let tabIndex: 0 | -1 = 0;
@@ -41,7 +41,7 @@
     on:keydown={handleKeydown}
     tabindex={tabIndex}
   >
-    <slot />
+    <slot open={isExpanded} />
   </li>
 {/if}
 
@@ -50,7 +50,7 @@
     role="treeitem"
     aria-expanded={isExpanded}
     aria-selected={isSelected}
-    class="hidden aria-expanded:block"
+    class="hidden aria-expanded:block {$$restProps.class || ''}"
     tabindex={tabIndex}
   >
     <slot name="list" />

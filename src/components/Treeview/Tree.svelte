@@ -1,3 +1,3 @@
-<ul role="tree" aria-labelledby="tree_label">
+<ul role="tree" aria-labelledby="tree_label" class={$$restProps.class || ''}>
   <slot />
 </ul>

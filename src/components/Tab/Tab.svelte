@@ -1,7 +1,8 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
-  import { quintIn } from "svelte/easing";
-  import TabItem from "./TabItem.svelte";
+  import type { Readable } from 'svelte/store';
+  import { fly } from 'svelte/transition';
+  import { quintIn } from 'svelte/easing';
+  import TabItem from './TabItem.svelte';
 
   type TabItem = {
     id: number;
@@ -14,12 +15,12 @@
     title: string;
   };
 
-  export let data: TabItem[];
+  export let data: Readable<TabItem[]>;
 
   const tabs: HTMLButtonElement[] = [];
   let activeIndex = 0;
   let focusedIndex: number;
-  const tabsLastIndex = data.length - 1;
+  const tabsLastIndex = $data.length - 1;
 
   const onFocusTab = (index: number) => {
     focusedIndex = index;
@@ -28,18 +29,18 @@
   const onKeydownTab = (event: KeyboardEvent) => {
     const key = event.key;
     switch (key) {
-      case "ArrowRight":
-      case "Right": // for IE, Edge 16-, Firefox 36-
+      case 'ArrowRight':
+      case 'Right': // for IE, Edge 16-, Firefox 36-
         focusNextTab();
         break;
-      case "ArrowLeft":
-      case "Left": // for IE, Edge 16-, Firefox 36-
+      case 'ArrowLeft':
+      case 'Left': // for IE, Edge 16-, Firefox 36-
         focusPreviousTab();
         break;
-      case "Home":
+      case 'Home':
         focusTab(0);
         break;
-      case "End":
+      case 'End':
         focusTab(tabsLastIndex);
         break;
     }
@@ -77,7 +78,7 @@
     aria-label="works category"
     class="border-border-primary font-barlow-semi text-text-tertiary  flex gap-3 border-b-2 text-xl font-semibold md:gap-4 md:text-2xl"
   >
-    {#each data as { id, title }, index}
+    {#each $data as { id, title }, index}
       {@const currentActive = activeIndex === index}
       {@const onClick = () => onClickTab(index)}
       {@const onFocus = () => onFocusTab(index)}
@@ -90,7 +91,7 @@
           on:keydown={onKeydownTab}
           role="tab"
           aria-controls="panel-{id}"
-          aria-selected={currentActive ? "true" : "false"}
+          aria-selected={currentActive ? 'true' : 'false'}
           tabindex={currentActive ? 0 : -1}
           on:click={onClick}
           class="border-border-primary hover:text-text-primary focus:text-text-primary aria-selected:border-border-accent-primary aria-selected:text-text-primary relative block border-b-2 px-1.5 py-1.5 tracking-wider duration-150 md:px-2 md:py-2"
@@ -102,14 +103,14 @@
   </ul>
 
   <div class="mt-8 w-full md:mt-10">
-    {#each data as { id, content }, index}
+    {#each $data as { id, content }, index}
       {@const currentActive = activeIndex === index}
       <!-- svelte-ignore a11y-no-noninteractive-tabindex -->
       <div
         id="panel-{id}"
         role="tabpanel"
         tabindex="0"
-        aria-hidden={currentActive ? "false" : "true"}
+        aria-hidden={currentActive ? 'false' : 'true'}
         aria-labelledby="tab-{id}"
         class="aria-hidden:hidden"
       >

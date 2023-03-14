@@ -1,3 +1,3 @@
-<ul role="group">
+<ul role="group" class={$$restProps.class || ''}>
   <slot />
 </ul>

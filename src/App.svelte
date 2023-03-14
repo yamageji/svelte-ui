@@ -1,15 +1,15 @@
 <script lang="ts">
-  import Tooltip from "./components/Tooltip/Tooltip.svelte";
-  import Tab from "./components/Tab/Tab.svelte";
-  import SampleTreeview from "./components/Treeview/SampleTreeview.svelte";
+  import Tooltip from './components/Tooltip/Tooltip.svelte';
+  import Tab from './components/Tab/Tab.svelte';
+  import SampleTreeview from './components/Treeview/SampleTreeview.svelte';
 
-  import { sampleTabData } from "./components/Tab/sampleTabData";
+  import { tabData } from './store/tabData';
 </script>
 
 <main>
   <div class="m-16">
-    <!-- <Tooltip />
-    <Tab data={sampleTabData} /> -->
+    <!-- <Tooltip /> -->
+    <!-- <Tab data={tabData} /> -->
     <SampleTreeview />
   </div>
 </main>
