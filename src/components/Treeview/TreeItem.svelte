@@ -4,7 +4,6 @@
 
   let isExpanded: boolean = false;
   let isSelected: boolean = false;
-  let tabIndex: 0 | -1 = 0;
 
   const dispatch = createEventDispatcher();
 
@@ -35,11 +34,11 @@
 
 {#if $$slots.default}
   <li
+    {...$$restProps}
     role="treeitem"
     aria-selected={isSelected}
     on:click={handleClick}
     on:keydown={handleKeydown}
-    tabindex={tabIndex}
     class={isSelected ? "text-red-500" : ""}
   >
     <slot open={isExpanded} />
@@ -52,7 +51,6 @@
     aria-expanded={isExpanded}
     aria-selected={isSelected}
     class="hidden aria-expanded:block {$$restProps.class || ''}"
-    tabindex={tabIndex}
   >
     <slot name="list" />
   </li>
