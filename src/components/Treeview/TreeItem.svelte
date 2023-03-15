@@ -9,10 +9,12 @@
 
   const expanded = () => (isExpanded = true);
   const unExpanded = () => (isExpanded = false);
+
   const handleClick = () => {
     isSelected = true;
     isExpanded = !isExpanded;
   };
+
   const handleKeydown = (event: KeyboardEvent) => {
     switch (event.key) {
       case Keys.Enter:

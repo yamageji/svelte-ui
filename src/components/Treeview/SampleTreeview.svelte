@@ -1,6 +1,7 @@
 <script lang="ts">
   import type { Readable } from "svelte/store";
 
+  import { Keys } from "../../lib/keyboard";
   import Tree from "./Tree.svelte";
   import TreeTitle from "./TreeTitle.svelte";
   import TreeItem from "./TreeItem.svelte";
@@ -17,24 +18,47 @@
   export let data: Readable<[Item]>;
 
   const items: HTMLElement[] = [];
-  let activeIndex = 0;
+
+  let activeIndex: number = 0;
+  let selectedItem: string;
+
   const onClickItem = (index: number) => {
     if (activeIndex === index) return;
     activeIndex = index;
   };
+
   const onFocusItem = (index: number) => (activeIndex = index);
   const focusItem = (index: number) => items[index].focus();
+
+  const handleKeydown = (event: KeyboardEvent) => {
+    switch (event.key) {
+      case Keys.ArrowUp:
+        // if (index === 0) return;
+        activeIndex--;
+        break;
+      case Keys.ArrowDown:
+        // 最後のインデックスで return;
+        activeIndex++;
+        break;
+    }
+  };
 </script>
 
 <Tree>
   <TreeTitle class="mb-5 text-2xl font-bold">My Documents</TreeTitle>
+  {activeIndex}
 
   {#each $data as { title, child }, i}
     {@const currentActive = activeIndex === i}
     {@const onClick = () => onClickItem(i)}
 
-    <TreeItem let:open tabindex={currentActive ? 0 : -1} on:Click={onClick}>
-      <span class="mt-2 flex w-fit items-center gap-1">
+    <TreeItem let:open>
+      <span
+        class="mt-2 flex w-fit items-center gap-1"
+        tabindex={currentActive ? 0 : -1}
+        on:click={onClick}
+        on:keydown={handleKeydown}
+      >
         {#if open}
           <IconFolderOpen class="h-5 w-5" />
         {:else}
